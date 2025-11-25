@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import './Navbar.scss'
 import Image from 'next/image'
+import './Navbar.scss'
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -14,23 +14,35 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
-      setIsScrolled(scrollY > 100)
+      setIsScrolled(scrollY > 50)
       
-      // Calculate scroll progress
       const windowHeight = window.innerHeight
       const documentHeight = document.documentElement.scrollHeight - windowHeight
       const progress = (scrollY / documentHeight) * 100
-      setScrollProgress(progress)
+      setScrollProgress(Math.min(progress, 100))
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false)
   }, [pathname])
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMobileMenuOpen])
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -46,47 +58,82 @@ const Navbar = () => {
   }
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
+    setIsMobileMenuOpen(prev => !prev)
+  }
+
+  const handleLinkClick = (e) => {
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false)
+    }
+  }
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
   }
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
-      <div className="nav-container">
-        <div className="nav-logo">
-          <Link href="/">
-            <Image width={200} height={200} src="/assets/nav-logo.jpg" alt="AIC Logo" />
-          </Link>
-        </div>
-
-        <div className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              href={link.path}
-              className={`nav-link ${isActive(link.path) ? 'active' : ''}`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {link.name}
+    <>
+      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+        <div className="nav-container">
+          <div className="nav-logo">
+            <Link href="/" onClick={handleLinkClick}>
+              <Image 
+                width={180} 
+                height={60} 
+                src="/assets/nav-logo.jpg" 
+                alt="AIC CIIC Logo" 
+                priority
+              />
             </Link>
-          ))}
-        </div>
+          </div>
 
-        <div 
-          className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}
-          onClick={toggleMobileMenu}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
+          <div className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+            <div className="nav-menu-inner">
+              {navLinks.map((link, index) => {
+                return React.createElement(
+                  Link,
+                  {
+                    key: link.path,
+                    href: link.path,
+                    className: `nav-link ${isActive(link.path) ? 'active' : ''}`,
+                    onClick: handleLinkClick,
+                    style: { '--link-index': index }
+                  },
+                  React.createElement('span', { className: 'nav-link-text' }, link.name),
+                  React.createElement('span', { className: 'nav-link-underline' })
+                )
+              })}
+            </div>
+          </div>
+
+          <button 
+            className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+          </button>
         </div>
-      </div>
-      
-      {/* Reading Progress Bar - MOVED TO BOTTOM */}
-      <div 
-        className="reading-progress-bar" 
-        style={{ width: `${scrollProgress}%` }}
-      ></div>
-    </nav>
+        
+        <div 
+          className="reading-progress-bar" 
+          style={{ width: `${scrollProgress}%` }}
+          role="progressbar"
+          aria-valuenow={scrollProgress}
+          aria-valuemin="0"
+          aria-valuemax="100"
+        />
+      </nav>
+
+      {isMobileMenuOpen && React.createElement('div', {
+        className: 'mobile-overlay',
+        onClick: closeMobileMenu,
+        'aria-hidden': 'true'
+      })}
+    </>
   )
 }
 

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { FaRocket, FaUsers, FaHandshake, FaCalendarAlt, FaArrowRight } from 'react-icons/fa'
+import { FaRocket, FaUsers, FaHandshake, FaCalendarAlt, FaArrowRight, FaCheckCircle, FaLeaf } from 'react-icons/fa'
 import './About.scss'
 
 export default function About() {
@@ -16,21 +16,50 @@ export default function About() {
 
 // Banner Section Component
 const BannerSection = () => {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    setIsVisible(true)
+  }, [])
+
   return (
     <section className="banner-section">
       <div className="banner-background">
+          <div className="animated-shapes">
+          <div className="shape shape-1"></div>
+          <div className="shape shape-2"></div>
+          <div className="shape shape-3"></div>
+        </div>
         <div className="banner-overlay"></div>
       </div>
       <div className="banner-content">
         <div className="banner-container">
-          <div className="banner-text-content">
+          <div className={`banner-text-content ${isVisible ? 'animate-in' : ''}`}>
             <h1 className="banner-title">
               WELCOME TO <span className="highlight">AIC - CIIC</span>
             </h1>
-        
-          
+            <p className="banner-subtitle">
+              Empowering Innovation in Clean Technology & Sustainable Mobility
+            </p>
+            <div className="banner-features">
+              <div className="banner-feature">
+                <FaLeaf />
+                <span>Clean Technology</span>
+              </div>
+              <div className="banner-feature">
+                <FaRocket />
+                <span>Innovation Hub</span>
+              </div>
+              <div className="banner-feature">
+                <FaUsers />
+                <span>Community Driven</span>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+      <div className="scroll-indicator">
+        <div className="scroll-arrow"></div>
       </div>
     </section>
   )
@@ -38,14 +67,39 @@ const BannerSection = () => {
 
 // Welcome Section Component
 const WelcomeSection = () => {
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.2 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current)
+      }
+    }
+  }, [])
+
   return (
-    <section className="welcome-section">
+    <section ref={sectionRef} className="welcome-section">
       <div className="welcome-container">
-        <div className="welcome-header">
+        <div className={`welcome-header ${isVisible ? 'animate-in' : ''}`}>
           <h2 className="welcome-title">About AIC-CIIC</h2>
           <div className="title-underline"></div>
+          <p className="welcome-tagline">Fostering Innovation, Empowering Entrepreneurs</p>
         </div>
-        <div className="welcome-content">
+        <div className={`welcome-content ${isVisible ? 'animate-in-delayed' : ''}`}>
           <div className="welcome-text">
             <p className="intro-text">
               Welcome to <strong>Atal Incubation Centre-Crescent Innovation and Incubation Council (AIC-CIIC)</strong>. 
@@ -54,7 +108,9 @@ const WelcomeSection = () => {
             
             <div className="features-grid">
               <div className="feature-item">
-              
+                <div className="feature-icon">
+                  <FaLeaf />
+                </div>
                 <div className="feature-text">
                   <h4>Clean Technology Focus</h4>
                   <p>Includes Recycling, Renewable Energy, Green Transportation, Electric Motors, and more</p>
@@ -62,7 +118,9 @@ const WelcomeSection = () => {
               </div>
               
               <div className="feature-item">
-               
+                <div className="feature-icon">
+                  <FaCheckCircle />
+                </div>
                 <div className="feature-text">
                   <h4>Government Initiative</h4>
                   <p>Supported by Atal Innovation Mission, NITI Aayog, Government of India</p>
@@ -70,17 +128,23 @@ const WelcomeSection = () => {
               </div>
             </div>
 
-            <p>
-              Our mission is to provide a conducive ecosystem for startups, facilitating collaboration, 
-              mentorship, funding, and access to industry resources in the Clean Technology sectors.
-            </p>
-            
-            <p>
-              We bring together entrepreneurs, industry partners, academic institutions, and government 
-              agencies to accelerate the growth of innovative ideas and transform them into successful businesses.
-            </p>
+            <div className="mission-content">
+              <h3 className="mission-heading">Our Mission</h3>
+              <p>
+                Our mission is to provide a conducive ecosystem for startups, facilitating collaboration, 
+                mentorship, funding, and access to industry resources in the Clean Technology sectors.
+              </p>
+              
+              <p>
+                We bring together entrepreneurs, industry partners, academic institutions, and government 
+                agencies to accelerate the growth of innovative ideas and transform them into successful businesses.
+              </p>
+            </div>
             
             <div className="mission-highlight">
+              <div className="highlight-icon">
+                <FaUsers />
+              </div>
               <p>
                 Join our vibrant community of entrepreneurs, investors, industry experts, and researchers 
                 working together to drive innovation and revolutionize the Clean Technology landscape.
@@ -149,7 +213,7 @@ const ServicesSection = () => {
   return (
     <section ref={sectionRef} className="services-about-section">
       <div className="services-container">
-        <div className="section-header">
+        <div className={`section-header ${isVisible ? 'animate-in' : ''}`}>
           <h3 className="mission-title">AIC CRESCENT INCUBATION COUNCIL</h3>
           <h2 className="section-title">Our Services</h2>
           <p className="section-subtitle">

@@ -6,6 +6,33 @@ import { FaUserTie, FaMoneyBillWave, FaChartLine, FaCogs, FaPhone, FaHeadphones,
 import './Home.scss'
 
 export default function Home() {
+  const [isImageVisible, setIsImageVisible] = useState(false);
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsImageVisible(true);
+        }
+      },
+      { 
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (imageRef.current) {
+      observer.observe(imageRef.current);
+    }
+
+    return () => {
+      if (imageRef.current) {
+        observer.unobserve(imageRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="home-page">
       {/* Hero Section with Video Background */}
@@ -28,16 +55,16 @@ export default function Home() {
           <h1 className="hero-title">
             Welcome to AIC - Crescent Innovation & Incubation Council
           </h1>
-          
           <Link href="/pages/About" className="btn-primary hero-cta">
-            Get Started
+            <span>Get Started</span>
+            <div className="hover-effect"></div>
           </Link>
         </div>
       </section>
 
       {/* Image Section */}
-      <section className="image-section">
-        <div className="image-container">
+      <section ref={imageRef} className="image-section">
+        <div className={`image-container ${isImageVisible ? 'animate-image' : ''}`}>
           <Image 
             src="/assets/home2.png" 
             alt="AIC Innovation Center"
@@ -55,37 +82,37 @@ export default function Home() {
       {/* Services Section */}
       <ServicesSection />
 
-           {/* Contact Section */}
+      {/* Contact Section */}
       <ContactSection />
     </div>
-  )
+  );
 }
 
 // Combined About & Mobility Section Component
 const AboutMobilitySection = () => {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          setIsVisible(true);
         }
       },
       { threshold: 0.3 }
-    )
+    );
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      observer.observe(sectionRef.current);
     }
 
     return () => {
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
+        observer.unobserve(sectionRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <section ref={sectionRef} className="about-mobility-section">
@@ -100,7 +127,7 @@ const AboutMobilitySection = () => {
                   Technology driven intelligent transport system (Road, Air & Water) that aims to transport people and goods around the globe.
                 </p>
                 <div className="card-quote">
-                  " Zero Emission… Stable… "
+                  &quot;Zero Emission… Stable…&quot;
                 </div>
               </div>
 
@@ -110,7 +137,7 @@ const AboutMobilitySection = () => {
                   All modes of transportation that use alternative fuels or advanced technology to reduce greenhouse gas emissions.
                 </p>
                 <div className="card-quote">
-                  " Faster… Safer… Efficient… "
+                  &quot;Faster… Safer… Efficient…&quot;
                 </div>
               </div>
             </div>
@@ -150,34 +177,34 @@ const AboutMobilitySection = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 // Services Section Component
 const ServicesSection = () => {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          setIsVisible(true);
         }
       },
       { threshold: 0.3 }
-    )
+    );
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      observer.observe(sectionRef.current);
     }
 
     return () => {
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
+        observer.unobserve(sectionRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   const services = [
     {
@@ -200,7 +227,7 @@ const ServicesSection = () => {
       title: "Machineries",
       description: "Access to state-of-the-art infrastructure and equipment"
     }
-  ]
+  ];
 
   return (
     <section ref={sectionRef} className="services-section">
@@ -229,33 +256,34 @@ const ServicesSection = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
+// Contact Section Component
 const ContactSection = () => {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          setIsVisible(true);
         }
       },
       { threshold: 0.3 }
-    )
+    );
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      observer.observe(sectionRef.current);
     }
 
     return () => {
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
+        observer.unobserve(sectionRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   const tips = [
     {
@@ -276,7 +304,7 @@ const ContactSection = () => {
       title: "Continuous Follow-up",
       description: "Continuously follow up to ensure that the issue is fully resolved and promptly offer any further assistance."
     }
-  ]
+  ];
 
   return (
     <section ref={sectionRef} className="contact-section">
@@ -300,8 +328,8 @@ const ContactSection = () => {
               <Image 
                 src="/assets/home-contact.jpg" 
                 alt="Contact AIC-CIIC"
-                width={400} // Reduced from 500
-                height={200} // Reduced from 250
+                width={400}
+                height={200}
                 className="contact-img"
               />
             </div>
@@ -317,6 +345,7 @@ const ContactSection = () => {
                     <div className="tip-number">{tip.number}</div>
                     <div className="tip-content">
                       <div className="tip-header">
+                        <div className="tip-icon">{tip.icon}</div>
                         <h5 className="tip-title">{tip.title}</h5>
                       </div>
                       <p className="tip-description">{tip.description}</p>
@@ -345,5 +374,5 @@ const ContactSection = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

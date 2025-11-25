@@ -5,16 +5,17 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .team-section {
- position: relative;
-  height: 70vh;
+  position: relative;
+  height: 100vh;
   background: linear-gradient(
-    133deg,
+    135deg,
     #3A4A78 0%,
-    #2F3F67 50%,
-    #1C2644 50%,
+    #2F3F67 35%,
+    #1C2644 70%,
     #131B2F 100%
   );
   display: flex;
@@ -23,11 +24,75 @@
   overflow: hidden;
 
   @include tablet {
-    height: 60vh;
+    height: 85vh;
   }
 
   @include mobile {
-    height: 50vh;
+    height: 75vh;
+  }
+
+  .team-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    .animated-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        
+        &.shape-1 {
+          width: 400px;
+          height: 400px;
+          top: -100px;
+          left: -100px;
+          animation: float 20s ease-in-out infinite;
+        }
+        
+        &.shape-2 {
+          width: 300px;
+          height: 300px;
+          bottom: -80px;
+          right: -80px;
+          animation: float 15s ease-in-out infinite reverse;
+        }
+        
+        &.shape-3 {
+          width: 250px;
+          height: 250px;
+          top: 50%;
+          right: 10%;
+          animation: float 18s ease-in-out infinite;
+          animation-delay: 2s;
+        }
+
+        @include mobile {
+          &.shape-1 {
+            width: 250px;
+            height: 250px;
+          }
+          
+          &.shape-2 {
+            width: 200px;
+            height: 200px;
+          }
+          
+          &.shape-3 {
+            width: 150px;
+            height: 150px;
+          }
+        }
+      }
+    }
   }
 
   .team-gradient-overlay {
@@ -37,9 +102,10 @@
     width: 100%;
     height: 100%;
     background: linear-gradient(
-      45deg,
-      rgba(19, 27, 47, 0.8) 0%,
-      rgba(58, 74, 120, 0.6) 100%
+      135deg,
+      rgba(19, 27, 47, 0.85) 0%,
+      rgba(58, 74, 120, 0.75) 50%,
+      rgba(28, 38, 68, 0.85) 100%
     );
     z-index: 1;
   }
@@ -61,145 +127,496 @@
     padding: 0 2rem;
 
     @include mobile {
-      padding: 0 1rem;
+      padding: 0 1.5rem;
     }
   }
 
   .team-text-content {
     text-align: center;
     color: var(--text-light);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     .team-title {
-      font-size: 4rem;
-      font-weight: 700;
+      font-size: 3.3rem;
+      font-weight: 800;
       margin-bottom: 1.5rem;
       line-height: 1.1;
       text-transform: uppercase;
-      text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-      letter-spacing: 3px;
-      background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
+      letter-spacing: 4px;
+      animation: titleSlideIn 1s ease-out 0.3s both;
+
+      .highlight {
+        background: linear-gradient(135deg, #4FC3F7 0%, #29B6F6 50%, #0288D1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        display: inline-block;
+        animation: highlightGlow 3s ease-in-out infinite;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 100%;
+          height: 5px;
+          background: linear-gradient(90deg, transparent, #4FC3F7, #29B6F6, #0288D1, transparent);
+          animation: underlineSlide 2s ease-in-out infinite;
+        }
+      }
 
       @include tablet {
-        font-size: 3rem;
-        letter-spacing: 2px;
+        font-size: 2.5rem;
+        letter-spacing: 3px;
       }
 
       @include mobile {
-        font-size: 2.2rem;
-        letter-spacing: 1px;
+        font-size: 2rem;
+        letter-spacing: 2px;
         margin-bottom: 1rem;
       }
     }
 
     .team-subtitle {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 300;
-      opacity: 0.9;
-      max-width: 600px;
-      margin: 0 auto;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      opacity: 0.95;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+      line-height: 1.5;
+      animation: subtitleFadeIn 1s ease-out 0.6s both;
 
       @include tablet {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+        margin-bottom: 2.5rem;
       }
 
       @include mobile {
-        font-size: 1rem;
-        padding: 0 1rem;
+        font-size: 1.15rem;
+        margin-bottom: 2rem;
+        padding: 0 0.5rem;
       }
+    }
+
+    .team-features {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      animation: featuresFadeIn 1s ease-out 0.9s both;
+
+      @include tablet {
+        gap: 2rem;
+      }
+
+      @include mobile {
+        gap: 1.5rem;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .team-feature {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.9);
+        padding: 0.85rem 1.75rem;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.4s ease;
+
+        svg {
+          font-size: 1.4rem;
+          color: #4FC3F7;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.2);
+          transform: translateY(-5px) scale(1.05);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+          border-color: rgba(79, 195, 247, 0.5);
+
+          svg {
+            transform: rotate(10deg) scale(1.1);
+          }
+        }
+
+        @include mobile {
+          font-size: 1rem;
+          padding: 0.7rem 1.4rem;
+          width: fit-content;
+        }
+      }
+    }
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    animation: bounce 2s ease-in-out infinite;
+
+    .scroll-arrow {
+      width: 30px;
+      height: 50px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      border-radius: 25px;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        animation: scrollDot 2s ease-in-out infinite;
+      }
+    }
+
+    @include mobile {
+      bottom: 1.5rem;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(30px, -30px) scale(1.05);
+    }
+    50% {
+      transform: translate(-20px, 20px) scale(0.95);
+    }
+    75% {
+      transform: translate(20px, 30px) scale(1.02);
+    }
+  }
+
+  @keyframes titleSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes subtitleFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 0.95;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes featuresFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes highlightGlow {
+    0%, 100% {
+      filter: brightness(1);
+    }
+    50% {
+      filter: brightness(1.2);
+    }
+  }
+
+  @keyframes underlineSlide {
+    0%, 100% {
+      transform: translateX(-10%);
+    }
+    50% {
+      transform: translateX(10%);
+    }
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      transform: translateX(-50%) translateY(-15px);
+    }
+  }
+
+  @keyframes scrollDot {
+    0%, 100% {
+      top: 10px;
+      opacity: 1;
+    }
+    50% {
+      top: 30px;
+      opacity: 0.3;
     }
   }
 }
 
 .team-section-image {
   width: 100%;
-  padding: 6rem 0;
+  padding: 100px 0;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  position: relative;
   
   @include tablet {
-    padding: 4rem 0;
+    padding: 80px 0;
   }
   
   @include mobile {
-    padding: 3rem 0;
+    padding: 60px 0;
+  }
+
+  .team-image-wrapper {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+
+    @include mobile {
+      padding: 0 1.5rem;
+    }
   }
 
   .team-image-container {
-    width: 85%;
-    max-width: 1200px;
-    margin: 0 auto;
     position: relative;
-    border-radius: 20px;
+    border-radius: 25px;
     overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
     
+    &.animate-in {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
     @include tablet {
-      width: 90%;
-      border-radius: 15px;
+      border-radius: 20px;
     }
     
     @include mobile {
-      width: 95%;
-      border-radius: 12px;
+      border-radius: 15px;
     }
 
-    &::before {
-      content: '';
+    .image-overlay {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       background: linear-gradient(
-        45deg,
-        rgba(0, 0, 0, 0.1) 0%,
-        transparent 50%,
-        rgba(0, 0, 0, 0.1) 100%
+        180deg,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.3) 70%,
+        rgba(0, 0, 0, 0.6) 100%
       );
       z-index: 1;
       pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    &:hover .image-overlay {
+      opacity: 1;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--secondary-color),
+        var(--primary-color)
+      );
+      border-radius: 25px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      animation: borderRotate 3s linear infinite paused;
+
+      @include tablet {
+        border-radius: 20px;
+      }
+      
+      @include mobile {
+        border-radius: 15px;
+      }
+    }
+
+    &:hover::before {
+      opacity: 1;
+      animation-play-state: running;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transform: skewX(-25deg);
+      transition: left 0.8s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    &:hover::after {
+      left: 150%;
     }
   }
 
   .team-image {
     width: 100%;
     height: auto;
-    object-fit: cover;
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    display: block;
+    transition: transform 0.6s ease;
     
     &:hover {
-      transform: scale(1.02);
+      transform: scale(1.05);
+    }
+  }
+
+  .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2.5rem;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+    color: white;
+    z-index: 3;
+    transform: translateY(100%);
+    transition: transform 0.5s ease;
+
+    @include mobile {
+      padding: 1.5rem;
+    }
+
+    h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+      @include tablet {
+        font-size: 1.7rem;
+      }
+
+      @include mobile {
+        font-size: 1.4rem;
+      }
+    }
+
+    p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin: 0;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+
+      @include mobile {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .team-image-container:hover .image-caption {
+    transform: translateY(0);
+  }
+
+  @keyframes borderRotate {
+    0% {
+      filter: hue-rotate(0deg);
+    }
+    100% {
+      filter: hue-rotate(360deg);
     }
   }
 }
 
-// Alternative layout styles
+// Alternative side-by-side layout
 .team-page.side-by-side {
   flex-direction: row;
-  min-height: 80vh;
+  min-height: 100vh;
   
   .team-section {
     flex: 1;
     height: auto;
-    min-height: 80vh;
+    min-height: 100vh;
   }
   
   .team-section-image {
     flex: 1;
     padding: 0;
     
+    .team-image-wrapper {
+      height: 100%;
+      padding: 0;
+      max-width: none;
+    }
+    
     .team-image-container {
       width: 100%;
       height: 100%;
       border-radius: 0;
+      
+      &::before {
+        border-radius: 0;
+      }
     }
     
     .team-image {
-      border-radius: 0;
-      height: 100%;
+      height: 100vh;
       object-fit: cover;
     }
   }
@@ -208,23 +625,20 @@
     flex-direction: column;
     
     .team-section {
-      min-height: 40vh;
+      min-height: 50vh;
     }
     
     .team-section-image {
-      min-height: 40vh;
+      min-height: 50vh;
+      
+      .team-image {
+        height: 50vh;
+      }
     }
   }
-  
-  @include mobile {
-    flex-direction: column;
-    
-    .team-section {
-      min-height: 40vh;
-    }
-    
-    .team-section-image {
-      min-height: 40vh;
-    }
-  }
+}
+
+// Smooth scroll behavior
+html {
+  scroll-behavior: smooth;
 }
