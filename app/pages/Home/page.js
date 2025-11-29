@@ -52,9 +52,7 @@ export default function Home() {
         </div>
 
         <div className="hero-content">
-          <h1 className="hero-title">
-            Welcome to AIC - Crescent Innovation & Incubation Council
-          </h1>
+          <TypingHeroTitle />
           <Link href="/pages/About" className="btn-primary hero-cta">
             <span>Get Started</span>
             <div className="hover-effect"></div>
@@ -88,7 +86,73 @@ export default function Home() {
   );
 }
 
-// Combined About & Mobility Section Component
+// Typing Hero Title Component
+const TypingHeroTitle = () => {
+  const [displayText, setDisplayText] = useState('');
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const rotatingTexts = [
+    "AIC"
+  ];
+
+  const staticPart = "Crescent Innovation & Incubation Council";
+
+  useEffect(() => {
+    const currentText = rotatingTexts[currentTextIndex];
+    
+    if (!isPaused) {
+      const timeout = setTimeout(() => {
+        if (!isDeleting) {
+          // Typing forward
+          if (charIndex < currentText.length) {
+            setDisplayText(currentText.substring(0, charIndex + 1));
+            setCharIndex(charIndex + 1);
+          } else {
+            // Finished typing, pause then start deleting
+            setIsPaused(true);
+            setTimeout(() => {
+              setIsPaused(false);
+              setIsDeleting(true);
+            }, 2000); // Pause for 3 seconds after typing
+          }
+        } else {
+          // Deleting backward
+          if (charIndex > 0) {
+            setDisplayText(currentText.substring(0, charIndex - 1));
+            setCharIndex(charIndex - 1);
+          } else {
+            // Finished deleting, move to next text
+            setIsDeleting(false);
+            setCurrentTextIndex((prev) => (prev + 1) % rotatingTexts.length);
+            setIsPaused(true);
+            setTimeout(() => {
+              setIsPaused(false);
+            }, 300); // Short pause before starting next text
+          }
+        }
+      }, isDeleting ? 100 : 500); // Typing and deletion speeds
+
+      return () => clearTimeout(timeout);
+    }
+  }, [displayText, isDeleting, isPaused, charIndex, currentTextIndex, rotatingTexts]);
+
+  return (
+    <h1 className="hero-title">
+      <span className="static-part">
+        Welcome to <span className='big'> {displayText}</span>
+      </span>
+      <span className="typing-container">
+        <span className="typing-text">{staticPart}</span>
+        <span className="cursor">|</span>
+      </span>
+    </h1>
+  );
+};
+
+ 
 const AboutMobilitySection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
@@ -100,7 +164,10 @@ const AboutMobilitySection = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.3 }
+      { 
+        threshold: 0.2,
+        rootMargin: '50px' 
+      }
     );
 
     if (sectionRef.current) {
@@ -116,6 +183,16 @@ const AboutMobilitySection = () => {
 
   return (
     <section ref={sectionRef} className="about-mobility-section">
+      {/* Animated Dark Circular Shapes */}
+      <div className="animated-shapes">
+        <div className="shape shape-1"></div>
+        <div className="shape shape-2"></div>
+  
+        <div className="shape shape-4"></div>
+        <div className="shape shape-5"></div>
+        
+      </div>
+
       <div className="container">
         <div className="content-grid">
           {/* Left Side - Mobility Cards */}
@@ -179,8 +256,7 @@ const AboutMobilitySection = () => {
     </section>
   );
 };
-
-// Services Section Component
+ 
 const ServicesSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
@@ -192,7 +268,7 @@ const ServicesSection = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
 
     if (sectionRef.current) {
@@ -259,7 +335,6 @@ const ServicesSection = () => {
   );
 };
 
-// Contact Section Component
 const ContactSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
@@ -271,7 +346,7 @@ const ContactSection = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
 
     if (sectionRef.current) {
@@ -308,6 +383,16 @@ const ContactSection = () => {
 
   return (
     <section ref={sectionRef} className="contact-section">
+      {/* Animated Background Shapes */}
+      <div className="contact-shapes">
+        <div className="contact-shape shape-1"></div>
+        <div className="contact-shape shape-2"></div>
+        <div className="contact-shape shape-3"></div>
+        <div className="contact-shape shape-4"></div>
+        <div className="contact-shape shape-5"></div>
+        <div className="contact-shape shape-6"></div>
+      </div>
+
       <div className="container">
         <div className="contact-content">
           {/* Left Side - Contact Info */}
@@ -317,7 +402,9 @@ const ContactSection = () => {
               <h3 className="contact-subtitle">Contact us</h3>
               
               <div className="contact-phone">
-                <FaPhone className="phone-icon" />
+                <div className="phone-pulse">
+                  <FaPhone className="phone-icon" />
+                </div>
                 <a href="tel:+919884282809" className="phone-number">
                   +91 98842 82809
                 </a>
@@ -325,31 +412,46 @@ const ContactSection = () => {
             </div>
 
             <div className="contact-image">
-              <Image 
-                src="/assets/home-contact.jpg" 
-                alt="Contact AIC-CIIC"
-                width={400}
-                height={200}
-                className="contact-img"
-              />
+              <div className="image-frame">
+                <Image 
+                  src="/assets/home-contact.jpg" 
+                  alt="Contact AIC-CIIC"
+                  width={400}
+                  height={200}
+                  className="contact-img"
+                />
+                <div className="image-overlay"></div>
+              </div>
             </div>
           </div>
 
           {/* Right Side - Tips Section */}
           <div className={`contact-tips ${isVisible ? 'animate-in-right' : ''}`}>
             <div className="tips-section">
-              <h4 className="tips-title">Tips for a perfect contact</h4>
+              <div className="tips-header">
+                <h4 className="tips-title">Tips for a perfect contact</h4>
+                <div className="tips-decoration">
+                  <div className="decoration-line"></div>
+                  <div className="decoration-dot"></div>
+                </div>
+              </div>
               <div className="tips-list">
                 {tips.map((tip, index) => (
                   <div key={index} className="tip-item">
-                    <div className="tip-number">{tip.number}</div>
+                    <div className="tip-number-wrapper">
+                      <div className="tip-number">{tip.number}</div>
+                      <div className="number-glow"></div>
+                    </div>
                     <div className="tip-content">
                       <div className="tip-header">
-                        <div className="tip-icon">{tip.icon}</div>
+                        <div className="tip-icon-wrapper">
+                          {tip.icon}
+                        </div>
                         <h5 className="tip-title">{tip.title}</h5>
                       </div>
                       <p className="tip-description">{tip.description}</p>
                     </div>
+                    <div className="tip-hover-effect"></div>
                   </div>
                 ))}
               </div>
@@ -360,6 +462,7 @@ const ContactSection = () => {
         {/* Full Width Map at Bottom */}
         <div className={`contact-map ${isVisible ? 'animate-in-bottom' : ''}`}>
           <div className="map-container">
+            <div className="map-overlay"></div>
             <iframe 
               src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15558.214626448593!2d80.085151!3d12.87208!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f70015762707%3A0xf59e18ce3c1bec5f!2sAIC-CIIC!5e0!3m2!1sen!2sus!4v1763711668597!5m2!1sen!2sus" 
               width="100%" 

@@ -6,10 +6,12 @@
   overflow-x: hidden;
 }
 
-// Banner Section Styles
+// Banner Section Styles - Fully Responsive
 .banner-section {
   position: relative;
   height: 100vh;
+  min-height: 600px;
+  max-height: 1200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,12 +24,23 @@
     #131B2F 100%
   );
 
+  // Tablet
   @include tablet {
     height: 85vh;
+    min-height: 500px;
   }
 
+  // Mobile
   @include mobile {
     height: 75vh;
+    min-height: 450px;
+    max-height: 800px;
+  }
+
+  // Small Mobile
+  @media (max-width: 480px) {
+    height: 70vh;
+    min-height: 400px;
   }
 
   .banner-background {
@@ -37,7 +50,7 @@
     width: 100%;
     height: 100%;
     
-       .animated-shapes {
+    .animated-shapes {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -54,6 +67,27 @@
           top: -100px;
           left: -100px;
           animation: float 20s ease-in-out infinite;
+
+          @include tablet {
+            width: 300px;
+            height: 300px;
+            top: -80px;
+            left: -80px;
+          }
+
+          @include mobile {
+            width: 200px;
+            height: 200px;
+            top: -60px;
+            left: -60px;
+          }
+
+          @media (max-width: 480px) {
+            width: 150px;
+            height: 150px;
+            top: -40px;
+            left: -40px;
+          }
         }
         
         &.shape-2 {
@@ -62,6 +96,27 @@
           bottom: -80px;
           right: -80px;
           animation: float 15s ease-in-out infinite reverse;
+
+          @include tablet {
+            width: 220px;
+            height: 220px;
+            bottom: -60px;
+            right: -60px;
+          }
+
+          @include mobile {
+            width: 150px;
+            height: 150px;
+            bottom: -40px;
+            right: -40px;
+          }
+
+          @media (max-width: 480px) {
+            width: 120px;
+            height: 120px;
+            bottom: -30px;
+            right: -30px;
+          }
         }
         
         &.shape-3 {
@@ -71,44 +126,37 @@
           right: 10%;
           animation: float 18s ease-in-out infinite;
           animation-delay: 2s;
-        }
 
-        @include mobile {
-          &.shape-1 {
-            width: 250px;
-            height: 250px;
+          @include tablet {
+            width: 180px;
+            height: 180px;
+            right: 5%;
           }
-          
-          &.shape-2 {
-            width: 200px;
-            height: 200px;
+
+          @include mobile {
+            width: 120px;
+            height: 120px;
+            right: 3%;
           }
-          
-          &.shape-3 {
-            width: 150px;
-            height: 150px;
+
+          @media (max-width: 480px) {
+            width: 100px;
+            height: 100px;
+            right: 2%;
           }
         }
       }
     }
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
 
-      opacity: 0.15;
-      animation: slowZoom 20s ease-in-out infinite alternate;
-    }
-
-    @keyframes slowZoom {
-      0% {
-        transform: scale(1);
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
       }
-      100% {
-        transform: scale(1.1);
+      33% {
+        transform: translate(30px, -20px) rotate(120deg);
+      }
+      66% {
+        transform: translate(-20px, 15px) rotate(240deg);
       }
     }
   }
@@ -136,18 +184,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 1rem;
   }
 
   .banner-container {
     width: 100%;
-     
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
     text-align: center;
-
-    @include mobile {
-      padding: 0 1.5rem;
-    }
   }
 
   .banner-text-content {
@@ -162,7 +206,7 @@
     }
 
     .banner-title {
-      font-size: 3.3rem;
+      font-size: 3.5rem;
       font-weight: 800;
       margin-bottom: 1.5rem;
       line-height: 1.1;
@@ -170,6 +214,7 @@
       text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
       letter-spacing: 3px;
       animation: titleSlideIn 1s ease-out 0.3s both;
+      padding: 0 1rem;
 
       .highlight {
         background: linear-gradient(135deg, #4FC3F7 0%, #29B6F6 50%, #0288D1 100%);
@@ -192,20 +237,35 @@
         }
       }
 
+      // Tablet
       @include tablet {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
         letter-spacing: 2px;
+        margin-bottom: 1.2rem;
       }
 
+      // Mobile
       @include mobile {
-        font-size: 2rem;
-        letter-spacing: 1px;
+        font-size: 2.2rem;
+        letter-spacing: 1.5px;
         margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        margin-bottom: 0.8rem;
+      }
+
+      @media (max-width: 360px) {
+        font-size: 1.6rem;
       }
     }
 
     .banner-subtitle {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 300;
       margin-bottom: 3rem;
       opacity: 0.95;
@@ -215,34 +275,59 @@
       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
       animation: subtitleFadeIn 1s ease-out 0.6s both;
       line-height: 1.5;
+      padding: 0 1rem;
 
+      // Tablet
       @include tablet {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         margin-bottom: 2.5rem;
+        line-height: 1.4;
       }
 
+      // Mobile
       @include mobile {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         margin-bottom: 2rem;
         padding: 0 0.5rem;
+        line-height: 1.4;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.3;
+      }
+
+      @media (max-width: 360px) {
+        font-size: 0.95rem;
       }
     }
 
     .banner-features {
       display: flex;
       justify-content: center;
-      gap: 3rem;
+      gap: 2rem;
       flex-wrap: wrap;
       animation: featuresFadeIn 1s ease-out 0.9s both;
+      padding: 0 1rem;
 
+      // Tablet
       @include tablet {
-        gap: 2rem;
+        gap: 1.5rem;
       }
 
+      // Mobile
       @include mobile {
-        gap: 1.5rem;
+        gap: 1rem;
         flex-direction: column;
         align-items: center;
+        padding: 0 0.5rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        gap: 0.8rem;
       }
 
       .banner-feature {
@@ -258,10 +343,22 @@
         border-radius: 50px;
         border: 1px solid rgba(255, 255, 255, 0.2);
         transition: all 0.3s ease;
+        white-space: nowrap;
 
-        svg {
+        .feature-svg {
           font-size: 1.3rem;
           color: #4FC3F7;
+          flex-shrink: 0;
+        }
+
+        span {
+          @include mobile {
+            font-size: 1rem;
+          }
+
+          @media (max-width: 480px) {
+            font-size: 0.9rem;
+          }
         }
 
         &:hover {
@@ -270,10 +367,31 @@
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
 
-        @include mobile {
+        // Tablet
+        @include tablet {
           font-size: 1rem;
           padding: 0.6rem 1.2rem;
+        }
+
+        // Mobile
+        @include mobile {
+          font-size: 0.95rem;
+          padding: 0.5rem 1rem;
           width: fit-content;
+          min-width: 200px;
+          justify-content: center;
+        }
+
+        // Small Mobile
+        @media (max-width: 480px) {
+          min-width: 180px;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        @media (max-width: 360px) {
+          min-width: 160px;
+          font-size: 0.85rem;
         }
       }
     }
@@ -308,8 +426,19 @@
       }
     }
 
+    // Mobile
     @include mobile {
       bottom: 1.5rem;
+      
+      .scroll-arrow {
+        width: 25px;
+        height: 40px;
+      }
+    }
+
+    // Small Mobile
+    @media (max-width: 480px) {
+      bottom: 1rem;
     }
   }
 
@@ -385,18 +514,25 @@
   }
 }
 
-// Welcome Section Styles
+// Welcome Section Styles - Fully Responsive
 .welcome-section {
   padding: 100px 0;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   position: relative;
 
+  // Tablet
   @include tablet {
     padding: 80px 0;
   }
 
+  // Mobile
   @include mobile {
     padding: 60px 0;
+  }
+
+  // Small Mobile
+  @media (max-width: 480px) {
+    padding: 50px 0;
   }
 
   .welcome-container {
@@ -404,8 +540,19 @@
     margin: 0 auto;
     padding: 0 2rem;
 
-    @include mobile {
+    // Tablet
+    @include tablet {
       padding: 0 1.5rem;
+    }
+
+    // Mobile
+    @include mobile {
+      padding: 0 1rem;
+    }
+
+    // Small Mobile
+    @media (max-width: 480px) {
+      padding: 0 0.75rem;
     }
   }
 
@@ -429,12 +576,24 @@
       position: relative;
       display: inline-block;
 
+      // Tablet
       @include tablet {
         font-size: 3rem;
       }
 
+      // Mobile
       @include mobile {
         font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        font-size: 1.8rem;
+      }
+
+      @media (max-width: 360px) {
+        font-size: 1.6rem;
       }
     }
 
@@ -445,6 +604,19 @@
       margin: 0 auto 1.5rem;
       border-radius: 3px;
       animation: expandWidth 1s ease-out 0.5s both;
+
+      // Mobile
+      @include mobile {
+        width: 100px;
+        height: 4px;
+        margin-bottom: 1rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        width: 80px;
+        height: 3px;
+      }
     }
 
     .welcome-tagline {
@@ -453,9 +625,27 @@
       opacity: 0.8;
       font-weight: 500;
       font-style: italic;
+      max-width: 600px;
+      margin: 0 auto;
 
+      // Tablet
+      @include tablet {
+        font-size: 1.2rem;
+      }
+
+      // Mobile
       @include mobile {
         font-size: 1.1rem;
+        padding: 0 0.5rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        font-size: 1rem;
+      }
+
+      @media (max-width: 360px) {
+        font-size: 0.9rem;
       }
     }
   }
@@ -485,10 +675,30 @@
           font-weight: 700;
         }
 
+        // Tablet
+        @include tablet {
+          font-size: 1.25rem;
+          line-height: 1.7;
+          padding: 0;
+        }
+
+        // Mobile
         @include mobile {
           font-size: 1.15rem;
           text-align: left;
-          padding: 0;
+          line-height: 1.6;
+          margin-bottom: 2.5rem;
+        }
+
+        // Small Mobile
+        @media (max-width: 480px) {
+          font-size: 1.05rem;
+          line-height: 1.5;
+          margin-bottom: 2rem;
+        }
+
+        @media (max-width: 360px) {
+          font-size: 1rem;
         }
       }
 
@@ -498,9 +708,23 @@
         gap: 2.5rem;
         margin: 3.5rem 0;
 
+        // Tablet
         @include tablet {
           grid-template-columns: 1fr;
           gap: 2rem;
+          margin: 3rem 0;
+        }
+
+        // Mobile
+        @include mobile {
+          gap: 1.5rem;
+          margin: 2.5rem 0;
+        }
+
+        // Small Mobile
+        @media (max-width: 480px) {
+          gap: 1rem;
+          margin: 2rem 0;
         }
 
         .feature-item {
@@ -520,6 +744,20 @@
             border-color: var(--primary-color);
           }
 
+          // Mobile
+          @include mobile {
+            padding: 1.5rem;
+            gap: 1rem;
+            flex-direction: column;
+            text-align: center;
+          }
+
+          // Small Mobile
+          @media (max-width: 480px) {
+            padding: 1.25rem;
+            gap: 0.8rem;
+          }
+
           .feature-icon {
             font-size: 2.5rem;
             flex-shrink: 0;
@@ -532,6 +770,21 @@
             background: linear-gradient(135deg, rgba(51, 65, 106, 0.1), rgba(51, 65, 106, 0.05));
             border-radius: 12px;
             transition: all 0.3s ease;
+
+            // Mobile
+            @include mobile {
+              font-size: 2rem;
+              width: 50px;
+              height: 50px;
+              align-self: center;
+            }
+
+            // Small Mobile
+            @media (max-width: 480px) {
+              font-size: 1.8rem;
+              width: 45px;
+              height: 45px;
+            }
           }
 
           &:hover .feature-icon {
@@ -546,6 +799,17 @@
               font-weight: 700;
               color: var(--secondary-color);
               margin-bottom: 0.75rem;
+
+              // Mobile
+              @include mobile {
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+              }
+
+              // Small Mobile
+              @media (max-width: 480px) {
+                font-size: 1.1rem;
+              }
             }
 
             p {
@@ -553,17 +817,18 @@
               line-height: 1.7;
               color: var(--text-dark);
               margin: 0;
-            }
-          }
 
-          @include mobile {
-            padding: 1.5rem;
-            gap: 1rem;
+              // Mobile
+              @include mobile {
+                font-size: 1rem;
+                line-height: 1.6;
+              }
 
-            .feature-icon {
-              font-size: 2rem;
-              width: 50px;
-              height: 50px;
+              // Small Mobile
+              @media (max-width: 480px) {
+                font-size: 0.95rem;
+                line-height: 1.5;
+              }
             }
           }
         }
@@ -572,6 +837,16 @@
       .mission-content {
         margin: 3rem 0;
 
+        // Mobile
+        @include mobile {
+          margin: 2.5rem 0;
+        }
+
+        // Small Mobile
+        @media (max-width: 480px) {
+          margin: 2rem 0;
+        }
+
         .mission-heading {
           font-size: 2rem;
           font-weight: 700;
@@ -579,8 +854,20 @@
           margin-bottom: 1.5rem;
           text-align: center;
 
+          // Tablet
+          @include tablet {
+            font-size: 1.8rem;
+          }
+
+          // Mobile
           @include mobile {
             font-size: 1.7rem;
+            margin-bottom: 1rem;
+          }
+
+          // Small Mobile
+          @media (max-width: 480px) {
+            font-size: 1.5rem;
           }
         }
       }
@@ -592,14 +879,25 @@
         margin-bottom: 1.5rem;
         text-align: justify;
 
+        // Tablet
         @include tablet {
           font-size: 1.1rem;
           text-align: left;
+          line-height: 1.8;
         }
 
+        // Mobile
         @include mobile {
           font-size: 1rem;
-          line-height: 1.8;
+          line-height: 1.7;
+          margin-bottom: 1.25rem;
+        }
+
+        // Small Mobile
+        @media (max-width: 480px) {
+          font-size: 0.95rem;
+          line-height: 1.6;
+          margin-bottom: 1rem;
         }
       }
 
@@ -607,7 +905,6 @@
         background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
         padding: 2.5rem;
         border-radius: 20px;
-        // border-left: 6px solid var(--primary-color);
         margin-top: 3rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         position: relative;
@@ -615,6 +912,27 @@
         display: flex;
         align-items: center;
         gap: 2rem;
+
+        // Tablet
+        @include tablet {
+          padding: 2rem;
+          gap: 1.5rem;
+        }
+
+        // Mobile
+        @include mobile {
+          padding: 1.5rem;
+          flex-direction: column;
+          text-align: center;
+          gap: 1rem;
+          margin-top: 2.5rem;
+        }
+
+        // Small Mobile
+        @media (max-width: 480px) {
+          padding: 1.25rem;
+          margin-top: 2rem;
+        }
 
         &::before {
           content: '';
@@ -632,8 +950,19 @@
           color: var(--primary-color);
           flex-shrink: 0;
 
-          @include mobile {
+          // Tablet
+          @include tablet {
             font-size: 2.5rem;
+          }
+
+          // Mobile
+          @include mobile {
+            font-size: 2.2rem;
+          }
+
+          // Small Mobile
+          @media (max-width: 480px) {
+            font-size: 2rem;
           }
         }
 
@@ -648,18 +977,22 @@
           position: relative;
           z-index: 1;
 
+          // Tablet
+          @include tablet {
+            font-size: 1.15rem;
+            line-height: 1.6;
+          }
+
+          // Mobile
           @include mobile {
             font-size: 1.1rem;
-          }
-        }
-
-        @include mobile {
-          padding: 2rem;
-          flex-direction: column;
-          text-align: center;
-
-          p {
             text-align: center;
+            line-height: 1.5;
+          }
+
+          // Small Mobile
+          @media (max-width: 480px) {
+            font-size: 1rem;
           }
         }
       }
@@ -687,18 +1020,25 @@
   }
 }
 
-// Services Section Styles
+// Services Section Styles - Fully Responsive
 .services-about-section {
   padding: 100px 0;
   background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
   position: relative;
 
+  // Tablet
   @include tablet {
     padding: 80px 0;
   }
 
+  // Mobile
   @include mobile {
     padding: 60px 0;
+  }
+
+  // Small Mobile
+  @media (max-width: 480px) {
+    padding: 50px 0;
   }
 
   .services-container {
@@ -706,8 +1046,19 @@
     margin: 0 auto;
     padding: 0 2rem;
 
-    @include mobile {
+    // Tablet
+    @include tablet {
       padding: 0 1.5rem;
+    }
+
+    // Mobile
+    @include mobile {
+      padding: 0 1rem;
+    }
+
+    // Small Mobile
+    @media (max-width: 480px) {
+      padding: 0 0.75rem;
     }
   }
 
@@ -732,14 +1083,23 @@
       letter-spacing: 3px;
       animation: fadeInDown 0.8s ease-out;
 
+      // Tablet
       @include tablet {
         font-size: 1.2rem;
         letter-spacing: 2px;
       }
 
+      // Mobile
       @include mobile {
         font-size: 1.1rem;
         letter-spacing: 1.5px;
+        margin-bottom: 0.5rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        font-size: 1rem;
+        letter-spacing: 1px;
       }
     }
 
@@ -754,12 +1114,25 @@
       background-clip: text;
       position: relative;
 
+      // Tablet
       @include tablet {
         font-size: 3rem;
+        margin-bottom: 1.25rem;
       }
 
+      // Mobile
       @include mobile {
         font-size: 2.2rem;
+        margin-bottom: 1rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        font-size: 1.8rem;
+      }
+
+      @media (max-width: 360px) {
+        font-size: 1.6rem;
       }
     }
 
@@ -771,8 +1144,26 @@
       opacity: 0.85;
       line-height: 1.6;
 
+      // Tablet
+      @include tablet {
+        font-size: 1.15rem;
+        line-height: 1.5;
+      }
+
+      // Mobile
       @include mobile {
         font-size: 1.1rem;
+        padding: 0 0.5rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        font-size: 1rem;
+        line-height: 1.4;
+      }
+
+      @media (max-width: 360px) {
+        font-size: 0.95rem;
       }
     }
   }
@@ -790,11 +1181,22 @@
       transform: translateY(0);
     }
 
+    // Tablet
     @include tablet {
       grid-template-columns: 1fr;
       gap: 2.5rem;
       max-width: 600px;
       margin: 0 auto;
+    }
+
+    // Mobile
+    @include mobile {
+      gap: 2rem;
+    }
+
+    // Small Mobile
+    @media (max-width: 480px) {
+      gap: 1.5rem;
     }
   }
 
@@ -817,6 +1219,27 @@
     opacity: 0;
     animation: fadeInUp 0.8s ease forwards;
     color: white;
+
+    // Tablet
+    @include tablet {
+      padding: 3rem 2.5rem;
+    }
+
+    // Mobile
+    @include mobile {
+      padding: 2.5rem 2rem;
+      border-radius: 20px;
+    }
+
+    // Small Mobile
+    @media (max-width: 480px) {
+      padding: 2rem 1.5rem;
+      border-radius: 18px;
+    }
+
+    @media (max-width: 360px) {
+      padding: 1.5rem 1.25rem;
+    }
 
     &::before {
       content: '';
@@ -882,6 +1305,16 @@
     .service-icon-wrapper {
       margin-bottom: 2.5rem;
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+      // Mobile
+      @include mobile {
+        margin-bottom: 2rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        margin-bottom: 1.5rem;
+      }
     }
 
     .service-icon {
@@ -900,16 +1333,26 @@
       backdrop-filter: blur(10px);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 
+      // Tablet
       @include tablet {
         width: 80px;
         height: 80px;
         font-size: 2.2rem;
       }
 
+      // Mobile
       @include mobile {
         width: 70px;
         height: 70px;
         font-size: 2rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+        border-width: 2px;
       }
     }
 
@@ -920,12 +1363,25 @@
       margin-bottom: 1.5rem;
       line-height: 1.3;
 
+      // Tablet
       @include tablet {
         font-size: 1.5rem;
+        margin-bottom: 1.25rem;
       }
 
+      // Mobile
       @include mobile {
         font-size: 1.35rem;
+        margin-bottom: 1rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        font-size: 1.25rem;
+      }
+
+      @media (max-width: 360px) {
+        font-size: 1.2rem;
       }
     }
 
@@ -935,9 +1391,28 @@
       color: rgba(255, 255, 255, 0.92);
       margin: 0 0 2.5rem 0;
 
+      // Tablet
+      @include tablet {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+      }
+
+      // Mobile
       @include mobile {
         font-size: 1rem;
-        line-height: 1.7;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 360px) {
+        font-size: 0.9rem;
       }
     }
 
@@ -949,14 +1424,26 @@
       transition: all 0.4s ease;
       color: rgba(255, 255, 255, 0.8);
       font-size: 1.4rem;
-    }
 
-    @include tablet {
-      padding: 3rem 2.5rem;
-    }
+      // Tablet
+      @include tablet {
+        bottom: 2rem;
+        right: 2rem;
+      }
 
-    @include mobile {
-      padding: 2.5rem 2rem;
+      // Mobile
+      @include mobile {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        font-size: 1.2rem;
+      }
+
+      // Small Mobile
+      @media (max-width: 480px) {
+        bottom: 1.25rem;
+        right: 1.25rem;
+        font-size: 1.1rem;
+      }
     }
   }
 }

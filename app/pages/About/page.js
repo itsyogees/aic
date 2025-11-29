@@ -25,7 +25,7 @@ const BannerSection = () => {
   return (
     <section className="banner-section">
       <div className="banner-background">
-          <div className="animated-shapes">
+        <div className="animated-shapes">
           <div className="shape shape-1"></div>
           <div className="shape shape-2"></div>
           <div className="shape shape-3"></div>
@@ -43,15 +43,15 @@ const BannerSection = () => {
             </p>
             <div className="banner-features">
               <div className="banner-feature">
-                <FaLeaf />
+                <FaLeaf className="feature-svg" />
                 <span>Clean Technology</span>
               </div>
               <div className="banner-feature">
-                <FaRocket />
+                <FaRocket className="feature-svg" />
                 <span>Innovation Hub</span>
               </div>
               <div className="banner-feature">
-                <FaUsers />
+                <FaUsers className="feature-svg" />
                 <span>Community Driven</span>
               </div>
             </div>
@@ -77,7 +77,7 @@ const WelcomeSection = () => {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (sectionRef.current) {
@@ -169,7 +169,7 @@ const ServicesSection = () => {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (sectionRef.current) {

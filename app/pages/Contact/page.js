@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaHeadset, FaLightbulb } from 'react-icons/fa'
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaHeadset, FaLightbulb, FaArrowRight } from 'react-icons/fa'
 import './Contact.scss'
 
 const ContactPage = () => {
@@ -35,6 +35,9 @@ const HeroSection = () => {
           <div className="shape shape-1"></div>
           <div className="shape shape-2"></div>
           <div className="shape shape-3"></div>
+          <div className="shape shape-4"></div>
+          <div className="shape shape-5"></div>
+          <div className="shape shape-6"></div>
         </div>
       </div>
       <div className="contact-gradient-overlay"></div>
@@ -49,15 +52,15 @@ const HeroSection = () => {
             </p>
             <div className="contact-features">
               <div className="contact-feature">
-                <FaHeadset />
+                <FaHeadset className="feature-svg" />
                 <span>24/7 Support</span>
               </div>
               <div className="contact-feature">
-                <FaPhone />
+                <FaPhone className="feature-svg" />
                 <span>Quick Response</span>
               </div>
               <div className="contact-feature">
-                <FaLightbulb />
+                <FaLightbulb className="feature-svg" />
                 <span>Expert Guidance</span>
               </div>
             </div>
@@ -83,7 +86,7 @@ const ContactInfoSection = () => {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (sectionRef.current) {
@@ -98,14 +101,15 @@ const ContactInfoSection = () => {
   }, [])
 
   return (
-    <section ref={sectionRef} className={`contact-info-section ${isVisible ? 'visible' : ''}`}>
+    <section ref={sectionRef} className="contact-info-section">
       <div className="section-content">
         <div className="contact-info-grid">
           <div 
-            className="contact-card"
+            className={`contact-card ${isVisible ? 'animate-in' : ''}`}
             style={{ animationDelay: '0.1s' }}
           >
             <div className="card-icon-wrapper">
+              <div className="icon-background"></div>
               <FaPhone className="card-icon" />
             </div>
             <div className="card-content">
@@ -122,16 +126,18 @@ const ContactInfoSection = () => {
                 className="contact-link"
               >
                 <span>Call Now</span>
-                <span className="link-arrow">→</span>
+                <FaArrowRight className="link-arrow" />
               </Link>
             </div>
+            <div className="card-hover-effect"></div>
           </div>
 
           <div 
-            className="contact-card"
+            className={`contact-card ${isVisible ? 'animate-in' : ''}`}
             style={{ animationDelay: '0.2s' }}
           >
             <div className="card-icon-wrapper">
+              <div className="icon-background"></div>
               <FaEnvelope className="card-icon" />
             </div>
             <div className="card-content">
@@ -148,9 +154,10 @@ const ContactInfoSection = () => {
                 className="contact-link"
               >
                 <span>Send Email</span>
-                <span className="link-arrow">→</span>
+                <FaArrowRight className="link-arrow" />
               </Link>
             </div>
+            <div className="card-hover-effect"></div>
           </div>
         </div>
       </div>
@@ -170,7 +177,7 @@ const ReachSection = () => {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (sectionRef.current) {
@@ -185,13 +192,13 @@ const ReachSection = () => {
   }, [])
 
   return (
-    <section ref={sectionRef} className={`reach-section ${isVisible ? 'visible' : ''}`}>
+    <section ref={sectionRef} className="reach-section">
       <div className="section-content">
         <h2 className="section-title">Reach Us</h2>
         <div className="reach-content">
           <div className="reach-grid">
             <div 
-              className="reach-item"
+              className={`reach-item ${isVisible ? 'animate-in' : ''}`}
               style={{ animationDelay: '0.1s' }}
             >
               <div className="reach-number">01</div>
@@ -213,10 +220,11 @@ const ReachSection = () => {
                   </Link>
                 </div>
               </div>
+              <div className="reach-hover-effect"></div>
             </div>
 
             <div 
-              className="reach-item"
+              className={`reach-item ${isVisible ? 'animate-in' : ''}`}
               style={{ animationDelay: '0.2s' }}
             >
               <div className="reach-number">02</div>
@@ -250,6 +258,7 @@ const ReachSection = () => {
                   </div>
                 </div>
               </div>
+              <div className="reach-hover-effect"></div>
             </div>
           </div>
         </div>
@@ -270,7 +279,7 @@ const MapSection = () => {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (sectionRef.current) {
@@ -285,11 +294,12 @@ const MapSection = () => {
   }, [])
 
   return (
-    <section ref={sectionRef} className={`map-section ${isVisible ? 'visible' : ''}`}>
+    <section ref={sectionRef} className="map-section">
       <div className="section-content">
         <h2 className="section-title">Our Location</h2>
-        <div className="map-wrapper">
+        <div className={`map-wrapper ${isVisible ? 'animate-in' : ''}`}>
           <div className="map-container">
+            <div className="map-overlay"></div>
             <iframe 
               src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15558.214626448593!2d80.085151!3d12.87208!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f70015762707%3A0xf59e18ce3c1bec5f!2sAIC-CIIC!5e0!3m2!1sen!2sus!4v1763711668597!5m2!1sen!2sus" 
               width="100%" 

@@ -18,10 +18,12 @@ const CareerPage = () => {
     <div className="career-page">
       {/* Hero Section */}
       <section className="career-hero">
-          <div className="animated-shapes">
+        <div className="animated-shapes">
           <div className="shape shape-1"></div>
           <div className="shape shape-2"></div>
           <div className="shape shape-3"></div>
+          <div className="shape shape-4"></div>
+          <div className="shape shape-5"></div>
         </div>
         <div className="career-gradient-overlay"></div>
         <div className="career-hero-content">
@@ -33,6 +35,17 @@ const CareerPage = () => {
               <p className="career-subtitle">
                 Join us in shaping the future of innovation and entrepreneurship
               </p>
+              <div className="career-features">
+                <div className="career-feature">
+                  <span>Innovation Driven</span>
+                </div>
+                <div className="career-feature">
+                  <span>Growth Focused</span>
+                </div>
+                <div className="career-feature">
+                  <span>Impact Oriented</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -75,7 +88,7 @@ const PositionHeader = () => {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (sectionRef.current) {
@@ -96,10 +109,13 @@ const PositionHeader = () => {
         <h2 className="position-title">Chief Executive Officer</h2>
         <div className="position-meta">
           <div className="meta-item">
-            <span>Vandalur, Chengalpattu, Tamil Nadu</span>
+            <span> Vandalur, Chengalpattu, Tamil Nadu</span>
           </div>
           <div className="meta-item">
-            <span>Full-time</span>
+            <span> Full-time</span>
+          </div>
+          <div className="meta-item">
+            <span> Executive Level</span>
           </div>
         </div>
       </div>
@@ -119,7 +135,7 @@ const OrganizationSection = () => {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (sectionRef.current) {
@@ -182,7 +198,7 @@ const ResponsibilitiesSection = () => {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (sectionRef.current) {
@@ -246,7 +262,7 @@ const EligibilitySection = () => {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (sectionRef.current) {
@@ -330,7 +346,7 @@ const ApplicationSection = ({ onApplyClick }) => {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (sectionRef.current) {
