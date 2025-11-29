@@ -9,12 +9,17 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [isMounted, setIsMounted] = useState(false)
   const pathname = usePathname()
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
-      setIsScrolled(scrollY > 50)
+      setIsScrolled(scrollY > 20)
       
       const windowHeight = window.innerHeight
       const documentHeight = document.documentElement.scrollHeight - windowHeight
@@ -35,12 +40,15 @@ const Navbar = () => {
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
+      document.documentElement.style.overflow = 'unset'
     }
     
     return () => {
       document.body.style.overflow = 'unset'
+      document.documentElement.style.overflow = 'unset'
     }
   }, [isMobileMenuOpen])
 
@@ -61,7 +69,7 @@ const Navbar = () => {
     setIsMobileMenuOpen(prev => !prev)
   }
 
-  const handleLinkClick = (e) => {
+  const handleLinkClick = () => {
     if (isMobileMenuOpen) {
       setIsMobileMenuOpen(false)
     }
@@ -71,9 +79,13 @@ const Navbar = () => {
     setIsMobileMenuOpen(false)
   }
 
+  if (!isMounted) {
+    return null
+  }
+
   return (
     <>
-      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+      <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
         <div className="nav-container">
           <div className="nav-logo">
             <Link href="/" onClick={handleLinkClick}>
@@ -83,26 +95,26 @@ const Navbar = () => {
                 src="/assets/nav-logo.jpg" 
                 alt="AIC CIIC Logo" 
                 priority
+                className="logo-image"
               />
             </Link>
           </div>
 
           <div className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
             <div className="nav-menu-inner">
-              {navLinks.map((link, index) => {
-                return React.createElement(
-                  Link,
-                  {
-                    key: link.path,
-                    href: link.path,
-                    className: `nav-link ${isActive(link.path) ? 'active' : ''}`,
-                    onClick: handleLinkClick,
-                    style: { '--link-index': index }
-                  },
-                  React.createElement('span', { className: 'nav-link-text' }, link.name),
-                  React.createElement('span', { className: 'nav-link-underline' })
-                )
-              })}
+              {navLinks.map((link, index) => (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className={`nav-link ${isActive(link.path) ? 'active' : ''}`}
+                  onClick={handleLinkClick}
+                  style={{ '--link-index': index }}
+                >
+                  <span className="nav-link-text">{link.name}</span>
+                  <span className="nav-link-underline"></span>
+                  {/* <span className="nav-link-dot"></span> */}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -128,11 +140,13 @@ const Navbar = () => {
         />
       </nav>
 
-      {isMobileMenuOpen && React.createElement('div', {
-        className: 'mobile-overlay',
-        onClick: closeMobileMenu,
-        'aria-hidden': 'true'
-      })}
+      {isMobileMenuOpen && (
+        <div 
+          className="mobile-overlay"
+          onClick={closeMobileMenu}
+          aria-hidden="true"
+        />
+      )}
     </>
   )
 }
